@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>View Counter</title>
+</head>
+<body>
+
+<script>
+
+const SHEET_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL"; 
+const videoID = new URLSearchParams(window.location.search).get("id");
+
+if (!videoID) {
+    document.write("Missing video ID");
+} else {
+    fetch(`${SHEET_URL}?id=${videoID}`)
+        .then(r => r.text())
+        .then(count => {
+            document.body.innerHTML = `<div style='font-size:20px;'>Views: ${count}</div>`;
+        })
+        .catch(err => {
+            document.body.innerHTML = "Error loading view count.";
+            console.error(err);
+        });
+}
+</script>
+
+</body>
+</html>
